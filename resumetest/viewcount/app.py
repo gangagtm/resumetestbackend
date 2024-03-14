@@ -1,0 +1,36 @@
+import json
+import boto3
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table('ViewCount')
+def lambda_handler(event, context): 
+
+
+    response = table.get_item(Key={
+        'id':'1'
+    })
+    views = response['Item']['views']
+    views = views + 1
+    print(views)
+    response = table.put_item(Item={
+            'id':'1',
+            'views': views
+    })
+        
+    print (response)
+
+
+
+    return {
+        "statusCode": 200,
+        'body': json.dumps(str(views)),
+        'headers': {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': True,
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Methods": "OPTIONS, POST, GET",
+        'Access-Control-Allow-Headers':'Content-Type'
+    },
+    
+}
+
+   

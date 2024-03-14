@@ -1,0 +1,66 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  resumetest
+
+  Sample SAM Template for resumetest
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+    MemorySize: 128
+
+Resources:
+  ViewCountApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Cors:
+        AllowHeaders: "'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization'"
+        AllowOrigin: "'*'"
+
+  ViewCountFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      FunctionName: ViewCountFunction
+      CodeUri: viewcount/
+      Handler: app.lambda_handler
+      Policies:
+        # Give DynamoDB Full Access to your Lambda Function
+        - AmazonDynamoDBFullAccess
+      Runtime: python3.9
+      Events:
+        ViewCount:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /visitor
+            Method: get
+            RestApiId: !Ref ViewCountApi
+
+  ViewCount:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ViewCount
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  ViewCountApi:
+    Description: "API Gateway endpoint URL for Prod stage for Visitor_count function"
+    Value: !Sub "https://${ViewCountApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/visitor/"
+  ViewCountFunction:
+    Description: "Visitor Count Lambda Function ARN"
+    Value: !GetAtt ViewCountFunction.Arn
+  ViewCountFunctionIamRole:
+    Description: "Implicit IAM Role created for Visitor Count function"
+    Value: !GetAtt ViewCountFunctionRole.Arn
