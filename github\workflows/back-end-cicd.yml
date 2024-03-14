@@ -1,0 +1,35 @@
+name: Deploy SAM Application
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install AWS CLI
+        run: |
+          pip install awscli
+
+      - name: Build SAM application
+        run: |
+          sam build --use-container
+
+      - name: Deploy SAM application
+        run: |
+          sam deploy --stack-name resumetest --region us-east-1 --capabilities CAPABILITY_IAM
+
+      - name: Show API Gateway URL
+        run: |
+          aws cloudformation describe-stacks --stack-name resumetest --query 'Stacks[0].Outputs[?OutputKey==`ViewCountApi`].OutputValue' --output text
