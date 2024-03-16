@@ -14,7 +14,7 @@ class TestApiGateway:
     @pytest.fixture()
     def api_gateway_url(self):
         """ Get the API Gateway URL from Cloudformation Stack outputs """
-        stack_name = os.environ.get("resumetest")
+        stack_name = os.environ.get("AWS_SAM_STACK_NAME")
 
         if stack_name is None:
             raise ValueError('Please set the AWS_SAM_STACK_NAME environment variable to the name of your stack')
@@ -30,10 +30,10 @@ class TestApiGateway:
 
         stacks = response["Stacks"]
         stack_outputs = stacks[0]["Outputs"]
-        api_outputs = [output for output in stack_outputs if output["OutputKey"] == "HelloWorldApi"]
+        api_outputs = [output for output in stack_outputs if output["OutputKey"] == "ViewCountApi"]
 
         if not api_outputs:
-            raise KeyError(f"HelloWorldAPI not found in stack {stack_name}")
+            raise KeyError(f"ViewCountApi not found in stack {stack_name}")
 
         return api_outputs[0]["OutputValue"]  # Extract url from stack outputs
 
