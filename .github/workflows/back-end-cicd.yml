@@ -23,7 +23,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip3 install --upgrade pip
-        pip3 install flake8 pytest boto3
+        pip install flake8 pytest boto3
     - name: Lint with flake8
     # stop the build if there are Python syntax errors or undefined names
       run: |
