@@ -37,7 +37,7 @@ jobs:
 
       - name: Deploy SAM application
         run: |
-          sam deploy --template-file backendresume\resumetest\template.yaml --stack-name resumetest --region us-east-1 --capabilities CAPABILITY_IAM
+          sam deploy --template-file backendresume/resumetest/template.yaml --stack-name resumetest --region us-east-1 --capabilities CAPABILITY_IAM
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
