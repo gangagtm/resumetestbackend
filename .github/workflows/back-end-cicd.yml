@@ -29,7 +29,7 @@ jobs:
       - name: Build SAM application
         run: |
           npm install -g aws-cdk
-          sam build --template resumetest/template.yaml --use-container
+          sam build --template resumetest/template.yaml --use-container 
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -37,8 +37,9 @@ jobs:
 
       - name: Deploy SAM application
         run: |
-          sam deploy --stack-name resumetest --region us-east1 --capabilities CAPABILITY_IAM
+          sam deploy --stack-name resumetest --region us-east1 --capabilities CAPABILITY_IAM --s3-bucket aws-sam-cli-managed-default-samclisourcebucket-lca0dulv3tbn
         env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-1
