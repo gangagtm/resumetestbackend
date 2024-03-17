@@ -27,9 +27,9 @@ jobs:
     - name: Lint with flake8
     # stop the build if there are Python syntax errors or undefined names
       run: |
-       flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
       # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-       flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       env:
        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -47,7 +47,7 @@ jobs:
     - name: sam deploy 
       uses: youyo/aws-sam-action/python3.8@master
       with:
-        sam_command: 'sam deploy --template-file template.yaml --stack-name resumetest --region us-east-1 --capabilities CAPABILITY_IAM'
+        sam_command: 'deploy --template-file template.yaml --stack-name resumetest --region us-east-1 --capabilities CAPABILITY_IAM'
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
