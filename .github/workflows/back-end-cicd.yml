@@ -24,7 +24,6 @@ jobs:
       run: |
         python -m pip3 install --upgrade pip
         pip3 install flake8 pytest boto3
-        if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
     - name: Lint with flake8
     # stop the build if there are Python syntax errors or undefined names
       run: |
