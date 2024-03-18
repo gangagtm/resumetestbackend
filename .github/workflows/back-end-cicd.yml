@@ -28,7 +28,7 @@ jobs:
 
       - name: Install pytest
         run: |
-          npm install -g pytest
+          sudo pip3 install pytest
 
       - name: Test with pytest
         env:
