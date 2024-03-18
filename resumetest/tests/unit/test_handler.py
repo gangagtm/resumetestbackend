@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from viewcount import app
+from resumetest.viewcount import app
 
 
 @pytest.fixture()

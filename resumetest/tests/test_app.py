@@ -4,7 +4,7 @@ import boto3
 import json
 import pytest
 from unittest.mock import MagicMock
-from viewcount.app import lambda_handler
+from resumetest.viewcount.app import lambda_handler
 
 @pytest.fixture
 def mock_dynamodb_table():
