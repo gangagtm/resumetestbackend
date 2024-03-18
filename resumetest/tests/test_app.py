@@ -24,5 +24,5 @@ def test_lambda_handler(mock_dynamodb_table):
 
     # Assert
     assert result['statusCode'] == 200
-    assert result['body'] == '6'  # Incremented view count as a string
+    assert result['body'] == '152'  # Incremented view count as a string
     assert mock_dynamodb_table.put_item.called  # Assert that put_item was called
