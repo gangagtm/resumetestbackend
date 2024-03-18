@@ -25,7 +25,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y python3-pip
           pip3 install awscli
-          
+
+      - name: Install pytest
+        run: |
+          npm install -g pytest
+
       - name: Test with pytest
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
