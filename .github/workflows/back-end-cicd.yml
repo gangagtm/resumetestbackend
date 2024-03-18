@@ -26,9 +26,9 @@ jobs:
           sudo apt-get install -y python3-pip
           pip3 install awscli
 
-      - name: Install pytest
+      - name: Install dependencies
         run: |
-          sudo pip3 install pytest
+          sudo pip3 install pytest boto3
 
       - name: Test with pytest
         env:
