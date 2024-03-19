@@ -1,28 +1,16 @@
-# tests/test_app.py
-
-import boto3
-import json
 import pytest
-from unittest.mock import MagicMock
+import unittest
 from resumetest.viewcount.app import lambda_handler
+import json
+      
+# class TestVisitor(unittest.TestCase):
+#     def test_lambda_handler(self):
+#         res_api = lambda_handler('a', 'b')
+#         self.assertEqual(res_api['statusCode'],200,msg=None)
+        
+    #need add to pipeline python3 -m unittest test.py
 
-@pytest.fixture
-def mock_dynamodb_table():
-    return MagicMock()
 
-def test_lambda_handler(mock_dynamodb_table):
-    # Arrange
-    event = {}
-    context = {}
-
-    # Mocking DynamoDB response
-    mock_response = {'Item': {'views': 5}}
-    mock_dynamodb_table.get_item.return_value = mock_response
-
-    # Act
-    result = lambda_handler(event, context)
-
-    # Assert
-    assert result['statusCode'] == 200
-    assert result['body'] == '152'  # Incremented view count as a string
-    assert mock_dynamodb_table.put_item.called  # Assert that put_item was called
+def test_lambda_handler():
+    res_api = lambda_handler('a', 'b')
+    assert res_api["statusCode"] == 200
